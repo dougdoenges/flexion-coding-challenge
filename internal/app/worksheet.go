@@ -1,7 +1,7 @@
 package app
 
 import (
-	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -39,12 +39,14 @@ func buildQuestion(data []string) (Question, error) {
 	q := Question{}
 
 	if len(data) != QuestionLength {
-		return Question{}, errors.New("invalid question provided")
+		return Question{},
+			fmt.Errorf("invalid question provided: %s", strings.Join(data, ","))
 	}
 
 	input, err := strconv.ParseFloat(data[0], 64)
 	if err != nil {
-		return Question{}, errors.New("invalid input number given")
+		return Question{},
+			fmt.Errorf("invalid input number given: %s", strings.Join(data, ","))
 	}
 	q.Input = input
 

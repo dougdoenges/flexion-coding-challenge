@@ -1,7 +1,7 @@
 package app
 
 import (
-	"errors"
+	"fmt"
 	"strconv"
 )
 
@@ -45,7 +45,7 @@ func newSubmission(data []string) (Submission, error) {
 		}
 		valNumber, err := strconv.ParseFloat(val, 64)
 		if err != nil {
-			return Submission{}, errors.New("invalid input number given")
+			return Submission{}, fmt.Errorf("invalid input number %s for student %s", val, resp.StudentName)
 		}
 		resp.Responses = append(resp.Responses, &valNumber)
 	}

@@ -16,15 +16,14 @@ func Run(ctx context.Context) {
 	flag.Parse()
 
 	if *worksheetFile == "" {
-		log.Fatal("worksheet File path is required")
+		log.Fatal("worksheet file path is required")
 	}
 	if *responsesFile == "" {
 		log.Fatal("response file path is required")
 	}
 	if *outputLocation == "" {
-		log.Fatal("output location is required")
+		log.Fatal("output file is required")
 	}
-	// TODO: validate all file types from flags
 
 	worksheetReader, err := file.NewReader[app.Worksheet](*worksheetFile)
 	if err != nil {

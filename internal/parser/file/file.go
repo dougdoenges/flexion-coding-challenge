@@ -23,14 +23,12 @@ var FILE_TYPES = map[FileType]struct{}{
 	EXCEL: {},
 }
 
-const DEFAULT_FILETYPE = CSV
-
 func IsValidFileType(ft string) bool {
 	_, ok := FILE_TYPES[FileType(ft)]
 	return ok
 }
 
-func ValidFileTypes() []FileType {
+func validFileTypes() []FileType {
 	vft := make([]FileType, 0, len(FILE_TYPES))
 	for key := range FILE_TYPES {
 		vft = append(vft, key)
@@ -46,8 +44,8 @@ type Reader[T any] struct {
 func NewReader[T any](path string) (Reader[T], error) {
 	typ := strings.ToLower(filepath.Ext(path))
 	if !IsValidFileType(typ) {
-		return Reader[T]{}, fmt.Errorf("invalid file type given '%s'. please provide one of the following: %s",
-			typ, ValidFileTypes())
+		return Reader[T]{}, fmt.Errorf("invalid file given '%s'. allowed types: %s",
+			path, validFileTypes())
 	}
 	return Reader[T]{path, FileType(typ)}, nil
 }
