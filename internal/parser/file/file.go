@@ -15,7 +15,7 @@ type FileType string
 
 const (
 	CSV   FileType = ".csv"
-	EXCEL FileType = ".xslx"
+	EXCEL FileType = ".xlsx"
 )
 
 var FILE_TYPES = map[FileType]struct{}{
@@ -105,7 +105,7 @@ type Writer struct {
 func NewWriter(path string) (Writer, error) {
 	typ := strings.ToLower(filepath.Ext(path))
 	if !IsValidFileType(typ) {
-		return Writer{}, fmt.Errorf("invalid file type '%s'. Supported types: .csv, .xlsx", typ)
+		return Writer{}, fmt.Errorf("invalid file type '%s'. Supported types: %s, %s", typ, CSV, EXCEL)
 	}
 	return Writer{path, FileType(typ)}, nil
 }
@@ -142,7 +142,6 @@ func writeCSVData(path string, data [][]string) error {
 
 func writeExcelData(path string, data [][]string) error {
 	f := excelize.NewFile()
-	sheet := "Output"
 
 	for i, row := range data {
 		for j, value := range row {
@@ -150,7 +149,7 @@ func writeExcelData(path string, data [][]string) error {
 			if err != nil {
 				return fmt.Errorf("failed to convert coordinates to cell: %v", err)
 			}
-			if err := f.SetCellValue(sheet, cell, value); err != nil {
+			if err := f.SetCellValue("Sheet1", cell, value); err != nil {
 				return fmt.Errorf("failed to set cell value: %v", err)
 			}
 		}

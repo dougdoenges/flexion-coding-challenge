@@ -1,7 +1,6 @@
 package client
 
 import (
-	"context"
 	"flag"
 	"log"
 
@@ -9,10 +8,10 @@ import (
 	"github.com/dougdoenges/flexion-coding-challenge/internal/parser/file"
 )
 
-func Run(ctx context.Context) {
+func Run() {
 	worksheetFile := flag.String("worksheet", "", "Give file path for worksheet (required)")
 	responsesFile := flag.String("responses", "", "Give file path for student responses to grade (required)")
-	outputLocation := flag.String("outputFile", "", "Give file type for output (optional: default in config)")
+	outputLocation := flag.String("output", "", "Give file path and name for output (required)")
 	flag.Parse()
 
 	if *worksheetFile == "" {
@@ -54,4 +53,6 @@ func Run(ctx context.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Printf("Success! Graded results can be found here: %s", *outputLocation)
 }

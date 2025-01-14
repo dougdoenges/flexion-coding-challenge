@@ -53,9 +53,8 @@ func newSubmission(data []string) (Submission, error) {
 	return resp, nil
 }
 
-func (s *Submission) Grade(ws Worksheet) {
-	answerKey := ws.Key()
-	for idx := range s.Responses {
+func (s *Submission) Grade(answerKey []*float64) {
+	for idx := range answerKey {
 		var decision Decision
 		if answerKey[idx] == nil {
 			decision = Invalid
@@ -76,5 +75,9 @@ func (s *Submission) ToGrid(questionIdx int) []string {
 	if s.Responses[questionIdx] != nil {
 		responseStr = strconv.FormatFloat(*s.Responses[questionIdx], 'f', -1, 64)
 	}
-	return []string{responseStr, string(s.Decisions[questionIdx])}
+	decision := ""
+	if len(s.Decisions) > questionIdx {
+		decision = string(s.Decisions[questionIdx])
+	}
+	return []string{responseStr, decision}
 }

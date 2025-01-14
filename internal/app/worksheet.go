@@ -46,7 +46,7 @@ func buildQuestion(data []string) (Question, error) {
 	input, err := strconv.ParseFloat(data[0], 64)
 	if err != nil {
 		return Question{},
-			fmt.Errorf("invalid input number given: %s", strings.Join(data, ","))
+			fmt.Errorf("invalid input number(s) given: %s", strings.Join(data, ","))
 	}
 	q.Input = input
 
@@ -56,9 +56,8 @@ func buildQuestion(data []string) (Question, error) {
 	targetUoM := data[2]
 	q.TargetUoM = strings.TrimSpace(strings.ToLower(targetUoM))
 
-	converter, err := NewConverter(q.InputUoM, q.TargetUoM)
+	answer, err := ConvertUnits(q.InputUoM, q.TargetUoM, q.Input)
 	if err == nil {
-		answer := converter.Convert(q.Input)
 		q.CorrectAnswer = &answer
 	}
 
@@ -78,5 +77,5 @@ func (q *Question) ToGrid() []string {
 	if q.CorrectAnswer != nil {
 		correctStr = strconv.FormatFloat(*q.CorrectAnswer, 'f', -1, 64)
 	}
-	return []string{strconv.FormatFloat(q.Input, 'f', -1, 64), q.InputUoM, q.TargetUoM, correctStr, ""}
+	return []string{strconv.FormatFloat(q.Input, 'f', -1, 64), q.InputUoM, q.TargetUoM, correctStr}
 }
