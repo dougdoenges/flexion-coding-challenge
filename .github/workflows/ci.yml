@@ -1,0 +1,71 @@
+name: Go CLI CI/CD
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'  # Only trigger on tag pushes that follow the pattern v* (e.g., v1.0.0)
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.23
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Run tests
+      run: go test ./... -v
+
+  build-release:
+    needs: build-test
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v') # Only run if the push is a tag
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.23
+
+    - name: Build CLI for macOS/Linux
+      run: |
+        GOOS=linux GOARCH=amd64 go build -o flexion-coding-challenge-linux ./cmd/client/main.go
+        GOOS=darwin GOARCH=amd64 go build -o flexion-coding-challenge-macos ./cmd/client/main.go
+
+    - name: Build CLI for Windows
+      run: GOOS=windows GOARCH=amd64 go build -o flexion-coding-challenge.exe ./cmd/client/main.go
+
+    - name: Create CLI Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Release ${{ github.ref }}
+        tag_name: ${{ github.ref }}
+        files: |
+          flexion-coding-challenge-linux
+          flexion-coding-challenge-macos
+          flexion-coding-challenge.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload CLI Release Assets
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-cli-app-binaries
+        path: |
+          flexion-coding-challenge-linux
+          flexion-coding-challenge-macos
+          flexion-coding-challenge.exe
