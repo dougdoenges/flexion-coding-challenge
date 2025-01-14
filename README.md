@@ -35,6 +35,9 @@ Do not include headers on input
 ## Installation Steps
 
 1. Download the latest release from the GitHub [Releases](https://github.com/dougdoenges/flexion-coding-challenge/releases) page. Choose the relevant executable for your system.
+2. For Linux, run the command ```chmod +x flexion-coding-challenge-linux```
+3. For MacOS, run the command ```chmod +x flexion-coding-challenge-macos```
+4. If your device interprets the executable as malware, open privacy settings and allow this application to be opened.
 
 ## How to run the application
 
