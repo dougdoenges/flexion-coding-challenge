@@ -8,6 +8,9 @@ on:
     tags:
       - 'v*'  # Only trigger on tag pushes that follow the pattern v* (e.g., v1.0.0)
 
+permissions:
+  contents: write
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
