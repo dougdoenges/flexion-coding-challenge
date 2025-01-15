@@ -1,0 +1,28 @@
+273.15,Kelvin,Celsius
+310.15,Kelvin,Celsius
+500,Kelvin,Fahrenheit
+100,Kelvin,Rankine
+0,Celsius,Kelvin
+25,Celsius,Fahrenheit
+100,Celsius,Rankine
+32,Fahrenheit,Celsius
+212,Fahrenheit,Kelvin
+-40,Fahrenheit,Rankine
+491.67,Rankine,Celsius
+600,Rankine,Fahrenheit
+300,Rankine,Kelvin
+1,Liters,Cups
+2.5,Liters,Tablespoons
+0.75,Liters,Cubic Inches
+5,Liters,Cubic Feet
+3,Liters,Gallons
+1,Cups,Liters
+2.5,Cups,Tablespoons
+0.75,Cups,Cubic Inches
+5,Cups,Cubic Feet
+3,Cups,Gallons
+1,Gallons,Liters
+2.5,Gallons,Tablespoons
+0.75,Gallons,Cubic Inches
+5,Gallons,Cups
+3,Gallons,Cubic Feet

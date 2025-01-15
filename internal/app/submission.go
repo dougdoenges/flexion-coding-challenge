@@ -59,6 +59,12 @@ func (s *Submission) Grade(answerKey []*float64) {
 		if answerKey[idx] == nil {
 			decision = Invalid
 		} else {
+			// question and response mismatch
+			if idx >= len(s.Responses) {
+				decision = Incorrect
+				continue
+			}
+
 			correct := *answerKey[idx] == roundFunc(*s.Responses[idx])
 			if correct {
 				decision = Correct
@@ -72,7 +78,7 @@ func (s *Submission) Grade(answerKey []*float64) {
 
 func (s *Submission) ToGrid(questionIdx int) []string {
 	responseStr := ""
-	if s.Responses[questionIdx] != nil {
+	if len(s.Responses) > questionIdx && s.Responses[questionIdx] != nil {
 		responseStr = strconv.FormatFloat(*s.Responses[questionIdx], 'f', -1, 64)
 	}
 	decision := ""
