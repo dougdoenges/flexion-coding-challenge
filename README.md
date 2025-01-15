@@ -49,8 +49,9 @@ Do not include headers on input
 1. Add help options for end users to receive example file formats for usage and more
 2. Deploy packaged code with CI/CD so the project can be used globally on download
 3. Increase test coverage for various file inputs
-4. Add support for configurable local execution options
-5. Add option to provide combinations of input/output via terminal in place of files
-6. Add standardized logging package and log during execution
-7. Automate semantic versioning for new releases
-8. Depending on future requirements, adopt comprehensive unit conversion package [go-units](https://pkg.go.dev/github.com/bcicen/go-units)
+4. Implement options for results including to terminal output, summary view, and score sums
+5. Add support for configurable local execution options
+6. Add option to provide combinations of input/output via terminal in place of files
+7. Add standardized logging package and log during execution
+8. Automate semantic versioning for new releases
+9. Depending on future requirements, adopt comprehensive unit conversion package [go-units](https://pkg.go.dev/github.com/bcicen/go-units)
